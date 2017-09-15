@@ -7,5 +7,6 @@ public class AccountsController {
   
   public static void doSomething(){
   	system.debug('### hello world ###');
+  	system.debug('@@@ another debug @@@');
   }
 }
