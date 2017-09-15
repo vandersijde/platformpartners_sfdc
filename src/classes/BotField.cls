@@ -15,4 +15,7 @@ public class BotField {
         this.linkURL = linkURL;
     }
 
+	public String HelloWorld(){
+		return 'Hello, world!';
+	}
 }
