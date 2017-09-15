@@ -1,0 +1,27 @@
+<apex:page standardController="Case" docType="html-5.0">
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"/>
+    
+    <script>
+        j$ = jQuery.noConflict();
+        j$(document).ready(function() {
+            $('#publisherAttachContentPost').trigger('click');
+            $('#chatterUploadFileAction').trigger('click');
+            $('.uploadFileSizeLimit').hide();           
+            $('.contentPublisherSlideDown.customPanel.alignTop').css('border', '0');
+            $('.clearContentPanelButtonContainer').hide();
+            $('.publisherFeedItemTypeChoices').hide();      
+            $('.cxfeedinnerwrapper').hide();  
+            $('.publisherBottomBarPlaceholder').hide();
+            $('.publisherTextAreaPlaceholder.alignCenter').hide();    
+            
+            if($('.file')[1].files.length > 0){
+                $('#publishersharebutton').trigger('click');
+            }else{
+                alert('Please select a file');
+            }            
+           });
+    </script>
+
+    <chatter:feed entityId="{!Case.Id}" />
+
+</apex:page>

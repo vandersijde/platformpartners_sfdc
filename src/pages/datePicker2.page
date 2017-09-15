@@ -1,0 +1,16 @@
+<apex:page controller="datePicker2Controller" docType="html-5.0">
+    <apex:stylesheet value="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <apex:includeScript value="//code.jquery.com/jquery-1.10.2.js"/>
+    <apex:includeScript value="//code.jquery.com/ui/1.11.4/jquery-ui.js"/>
+  <script>
+	var j$ = jQuery.noConflict();
+
+    j$(document).ready(function($) {
+        j$('[id$=datepicker]').datepicker({dateFormat: 'dd/mm/yy'})
+    });
+    </script>
+    <apex:form >
+		<apex:inputText value="{!theDate}" id="datepicker"/>
+        <apex:commandButton action="{!LogDate}" value="Log Date"/>
+    </apex:form>
+</apex:page>

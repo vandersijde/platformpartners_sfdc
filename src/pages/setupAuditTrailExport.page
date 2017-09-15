@@ -1,0 +1,32 @@
+<apex:page controller="setupAuditTrailController" contentType="application/vnd.ms-excel#{!TODAY()}_export_setup_audit_trail.xls" cache="true" standardStylesheets="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+    <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head></head> 
+        <body>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <td x:autofilter='all'>Component Name</td>
+                        <td x:autofilter='all'>Action</td>
+                        <td x:autofilter='all'>Section</td>
+                        <td x:autofilter='all'>Last Actor Name</td>
+                        <td x:autofilter='all'>Last Action Date</td>
+                        <td x:autofilter='all'>Number of Items</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!displayMap}" var="display">
+                        <tr>
+                            <td>{!displayMap[display].Label}</td>
+                            <td>{!displayMap[display].Action}</td>
+                            <td>{!displayMap[display].Section}</td>
+                            <td>{!displayMap[display].LastActorName}</td>
+                            <td>{!displayMap[display].LastActionDate}</td>
+                            <td>{!displayMap[display].numberOfItems}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>    
+        </body>
+    </html>     
+</apex:page>

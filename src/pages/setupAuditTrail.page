@@ -1,0 +1,46 @@
+<apex:page controller="setupAuditTrailController" tabstyle="Setup_Audit_Trail__tab">
+	<apex:form id="satForm">
+        <apex:sectionHeader title="Setup Audit Trail"/>
+    	<apex:pageBlock title="Selection Criteria" id="criteriaPB" mode="maindetail">
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Start Date"/>
+                    <apex:inputText value="{!startDateString}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="End Date"/>
+                    <apex:inputText value="{!endDateString}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:repeat value="{!sectionSelectList}" var="sectionSelect">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value="{!sectionSelect.Label}"/>
+                        <apex:inputCheckbox value="{!sectionSelect.Selected}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:repeat>
+            </apex:pageBlockSection>
+			<apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Process" action="{!ReloadPage}" rerender="satForm,actionPB,sectionPB,displayPB" status="reloadPage"/>
+                <apex:commandButton value="Export to Excel" action="{!ExportToExcel}"/>
+                <apex:actionStatus id="reloadPage">
+                    <apex:facet name="start">
+                        <apex:outputText value="reloading..." style="left-margin:15px"/>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>    
+		<!-- #### DISPLAY TABLE #### -->
+        <apex:pageBlock title="Detailed Information" id="displayPB" mode="maindetail">
+            <!--<apex:pageBlockSection title="Detailed Information" collapsible="true" columns="1">-->
+                <apex:pageBlockTable value="{!displayMap}" var="display">
+                    <apex:column value="{!displayMap[display].Label}" headerValue="Component"/>
+                    <apex:column value="{!displayMap[display].Action}" headerValue="Action" style="color:{!CASE(displayMap[display].Action,'Add','green','Update','orange','Remove','red','blue')}"/>
+                    <apex:column value="{!displayMap[display].Section}" headerValue="Section"/>
+                    <apex:column value="{!displayMap[display].LastActorName}" headerValue="Last Actor Name"/>
+                    <apex:column value="{!displayMap[display].LastActionDate}" headerValue="Last Action Date"/>
+                    <apex:column value="{!displayMap[display].numberOfItems}" headerValue="Number of changes"/>
+                </apex:pageBlockTable>
+            <!--</apex:pageBlockSection>-->
+        </apex:pageBlock>	
+    </apex:form>
+</apex:page>

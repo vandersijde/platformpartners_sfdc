@@ -1,0 +1,39 @@
+<apex:page controller="CreateInvoicesController" tabStyle="Invoice__c">
+    <apex:sectionHeader title="Invoice" subtitle="Create new invoices"/>
+    
+    <apex:form >
+        <apex:pageMessages escape="false"/>
+        <apex:pageBlock title="Orders to invoice" id="pbOrders">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Create invoices" action="{!CreateInvoices}"/>
+            </apex:pageBlockButtons>
+        
+            <apex:repeat value="{!orderList}" var="o" >
+                <apex:pageBlockSection collapsible="false" columns="1">
+                    <apex:facet name="header">
+                        <apex:outputPanel >        
+                            <apex:outputText value="{!' ' + o.Record.Name + ' - ' + o.Record.Customer_account__r.Name + ' - ' + o.Record.Invoice_account__r.Name}"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:pageBlockTable value="{!o.orderLines}" var="ol" id="olTable">
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:inputCheckbox value="{!o.Selected}">
+                                    <apex:actionSupport event="onchange" rerender="pbOrders"/>
+                                </apex:inputCheckbox>
+                            </apex:facet>
+                            <apex:inputCheckbox value="{!ol.Selected}"/>
+                        </apex:column>
+                        <apex:column value="{!ol.Record.Name}"/>
+                        <apex:column value="{!ol.Record.Description__c}"/>
+                        <apex:column value="{!ol.Record.Hours__c}"/>
+                        <apex:column value="{!ol.Record.Rate__c}"/>
+                        <apex:column value="{!ol.Record.Amount_excl_VAT__c}"/>
+                        <apex:column value="{!ol.Record.VAT__c}"/>
+                        <apex:column value="{!ol.Record.Amount_incl_VAT__c}"/>
+                    </apex:pageBlockTable>        
+                </apex:pageBlockSection>
+            </apex:repeat>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

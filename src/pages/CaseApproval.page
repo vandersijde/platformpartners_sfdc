@@ -1,0 +1,58 @@
+<apex:page StandardController="Case" extensions="CaseApprovalExt">
+    <apex:form >
+    <apex:pageBlock mode="maindetail">
+        <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+                <apex:outputText value="Boarding Package Collection Start"/>
+                <apex:outputPanel layout="block">
+                    <table>
+                        <tr>
+                            <td valign="top"><apex:outputField value="{!Case.Package_Collection_Start__c}" /></td>
+                            <td valign="top"><apex:outputField value="{!Case.Package_Collection_Start_Comment__c}" style="width:250px;heigth:100px"/></td>
+                        </tr>
+                    </table>    
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText value="Boarding Plan/Form Validation Completion"/>
+                <apex:outputPanel layout="block">
+                    <table>
+                        <tr>
+                            <td valign="top"><apex:outputField value="{!Case.Package_Collection_Start__c}" /></td>
+                            <td valign="top"><apex:outputField value="{!Case.Package_Collection_Start_Comment__c}" style="width:250px;heigth:100px"/></td>
+                        </tr>
+                    </table>    
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText value="Merchant Integraion Completion"/>
+                <apex:outputPanel layout="block">
+                    <table>
+                        <tr>
+                            <td valign="top"><apex:inputField value="{!Case.Package_Collection_Start__c}" /></td>
+                            <td valign="top"><apex:inputField value="{!Case.Package_Collection_Start_Comment__c}" style="width:250px;heigth:100px"/></td>
+                        </tr>
+                    </table>    
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText value="3rd Party Completion"/>
+                <apex:outputPanel layout="block">
+                    <table>
+                        <tr>
+                            <td valign="top"><apex:outputField value="{!Case.Package_Collection_Start__c}" /></td>
+                            <td valign="top"><apex:outputField value="{!Case.Package_Collection_Start_Comment__c}" style="width:250px;heigth:100px"/></td>
+                        </tr>
+                    </table>    
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText value=""/>
+                <apex:outputPanel layout="block">
+                    <apex:commandButton value="Save Approval" action="{!Save}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

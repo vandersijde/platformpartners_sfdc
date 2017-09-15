@@ -1,0 +1,80 @@
+<apex:page controller="ProfileComparisonController" sidebar="false">
+    <apex:sectionHeader title="Profile Comparison"/>
+    <apex:pageMessages escape="false" id="msgs"/>
+    <apex:form >
+    	<apex:pageBlock mode="maindetail">
+        	<apex:pageBlockSection columns="1">
+            	<apex:pageBlockSectionItem >
+                    <apex:outputText value="Selected Object"/>
+                    <apex:selectList value="{!selectedObject}" size="1">
+                        <apex:selectOptions value="{!objectSelectList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            	<apex:pageBlockSectionItem >
+                    <apex:outputText value="Selected Profiles"/>
+                    <apex:selectList value="{!selectedProfiles}" multiselect="true" size="20">
+                        <apex:selectOptions value="{!profileSelectList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            	<apex:pageBlockSectionItem >
+                    <apex:outputText value=""/>
+					<apex:outputPanel >
+                    	<apex:commandButton value="Generate Data" action="{!RetrieveFLS}" rerender="JSONOutput,msgs" status="loading"/>
+                        <apex:actionStatus id="loading">
+                            <apex:facet name="start">
+                                <apex:image value="/img/loading32.gif" height="16px" width="16px"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>    
+                </apex:pageBlockSectionItem>
+            	<apex:pageBlockSectionItem >
+                    <apex:outputText value=""/>
+					<apex:outputPanel >
+                    	<apex:commandButton value="No Permission" action="{!SetNoPermission}" rerender="JSONOutput,msgs" status="loading"/>
+                    	<apex:commandButton value="Read Permission" action="{!SetReadPermission}" rerender="JSONOutput,msgs" status="loading"/>
+                        <apex:commandButton value="Read/Write Permission" action="{!SetReadWritePermission}" rerender="JSONOutput,msgs" status="loading"/>
+                        <apex:actionStatus id="loading">
+                            <apex:facet name="start">
+                                <apex:image value="/img/loading32.gif" height="16px" width="16px"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>    
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:outputPanel id="JSONOutput"><!--pageBlock title="JSON Output" id="JSONOutput">-->
+			<div style="float:left;width:350px">
+                <table style="width:100%">
+                    <tr>
+                        <td style="height:20px;padding-left:5px;vertical-align:middle;background-color:#1797C0;color:#fff"><b>Field Name</b></td>
+                        <td style="height:20px;padding-left:5px;vertical-align:middle;background-color:#1797C0;color:#fff"><b>Field Type</b></td>
+                    </tr>
+                    <apex:repeat value="{!selectedObjectFieldMap}" var="fldName">
+						<tr>
+                            <td style="height:20px;padding-left:5px;vertical-align:middle;background-color:{!IF(fldTypeMap[fldName]=='FORMULA','#EEE',IF(fldTypeMap[fldName]=='REFERENCE','#CBE5ED','#CCC'))};"><apex:outputText value="{!selectedObjectFieldMap[fldName]}" escape="false"/></td>	
+                            <td style="height:20px;padding-left:5px;vertical-align:middle;background-color:{!IF(fldTypeMap[fldName]=='FORMULA','#EEE',IF(fldTypeMap[fldName]=='REFERENCE','#CBE5ED','#CCC'))}"><apex:outputText value="{!fldTypeMap[fldName]}" escape="false"/></td>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+			<apex:repeat value="{!fieldLevelData}" var="profile">
+            	<div style="float:left;width:auto">
+                    <table style="width:100%">
+                        <tr><td style="padding-left:5px;padding-right:5px;height:20px;text-align:center;vertical-align:middle;background-color:#1797C0;color:#fff"><b>{!profile}</b></td></tr>
+                        <apex:repeat value="{!selectedObjectFieldMap}" var="fldName">
+                            <tr>
+                                <td bgcolor="{!IF(fieldLevelData[profile][fldName].visible,IF(fieldLevelData[profile][fldName].updatable,'#66FF66','#CCFFCC'),'#FFCCCC')}" style="text-align:center;height:20px;vertical-align:middle;">
+                                    <apex:outputText value="{!IF(fieldLevelData[profile][fldName].visible,IF(fieldLevelData[profile][fldName].updatable,'R/W','R'),'-')}" escape="false"/>
+                                    <apex:outputPanel style="float:right;">	
+                                    	<apex:inputCheckbox value="{!fieldLevelData[profile][fldName].selected}"/>
+                                    </apex:outputPanel>    
+                                </td>	
+                            </tr>    
+                        </apex:repeat>
+                    </table>
+                </div>
+			</apex:repeat>
+        </apex:outputPanel>    
+        <!--</apex:pageBlock>-->
+    </apex:form>
+</apex:page>

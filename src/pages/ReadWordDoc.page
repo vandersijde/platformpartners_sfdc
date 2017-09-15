@@ -1,0 +1,6 @@
+<apex:page controller="ReadWordDocController">
+    <apex:form >
+        <apex:commandButton value="Upload!" action="{!LoadAndShowDoc}" rerender="output"/><br/><br/>
+        <apex:outputText value="{!fileToString}" id="output" escape="false"/>
+    </apex:form>
+</apex:page>

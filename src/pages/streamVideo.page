@@ -1,0 +1,8 @@
+<apex:page docType="html-5.0">
+    <video width="356" height="200">
+        <source src="https://emea.salesforce.com/06920000002dkAz" type="video/mov" />
+        <!--<source src="full/link/to/http/ogv/video/file.ogv" type="video/ogg" />
+        <source src="full/link/to/http/webm/video/file.wbem" type="video/webm" />-->
+        <em>Sorry, your browser doesn't support HTML5 video.</em>
+    </video>    
+</apex:page>

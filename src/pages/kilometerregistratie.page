@@ -1,0 +1,63 @@
+<apex:page controller="kilometerregistratie">
+    <apex:sectionHeader title="Kilometerdeclaratie" subtitle="Genereer declaratie"/>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection title="Genereer ritdeclaratie formulier" collapsible="false">
+                <!-- ### VAN ### -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Van" for="van"/>
+                    <apex:inputText value="{!van}" id="van" style="width:250px"/>
+                </apex:pageBlockSectionItem>
+                <!-- ### NAAR ### -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Naar" for="naar"/>
+                    <apex:inputText value="{!naar}" id="naar" style="width:250px"/>
+                </apex:pageBlockSectionItem>
+                <!-- ### START ### -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Start"/>
+                    <apex:inputField value="{!startevent.ActivityDate}"/>
+                </apex:pageBlockSectionItem>
+                <!-- ### EINDE ### -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Einde"/>
+                    <apex:inputField value="{!endevent.ActivityDate}"/>
+                </apex:pageBlockSectionItem>
+                <!-- ### AANTAL KMS ### -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Kilometers" for="kms"/>
+                    <apex:inputText value="{!kms}" id="kms" style="width:50px;text-align:right"/>
+                </apex:pageBlockSectionItem>
+                <!-- ### DAGEN ### -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Dagen" for="days"/>
+					<apex:selectList size="7" multiselect="true" value="{!selectedDays}">
+                        <apex:selectOptions value="{!optionsDaysList}"/>
+                    </apex:selectList>	
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Genereer lijst" action="{!GenerateKmList}" reRender="pbResult"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="pbResult">
+            <apex:pageBlockSection title="Gegenereerde kilometerlijst" collapsible="false" columns="1">
+                <apex:pageBlockTable value="{!kmrecordList}" var="rec">
+                    <apex:column headerValue="Actie" style="width:10%">
+                        <apex:commandLink value="Verwijder" action="{!DeleteRow}" rerender="pbResult" rendered="{!NOT(ISNULL(rec.datum))}">
+                            <apex:param value="{!rec.row}" assignTo="{!selectedrow}" name="selectedrow" id="selectedrow"/>
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column value="{!rec.datum}" headerValue="Datum" style="width:10%"/>
+                    <apex:column value="{!rec.van}" headerValue="Van" style="width:35%"/>
+                    <apex:column value="{!rec.naar}" headerValue="Naar" style="width:35%;{!IF(rec.datum<>null,'','font-weight:bold')}"/>
+                    <apex:column value="{!rec.km}" headerValue="Km" style="width:10%;text-align:right;{!IF(rec.datum<>null,'','font-weight:bold')}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>        
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Exporteer naar Excel" action="{!ExportToExcel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

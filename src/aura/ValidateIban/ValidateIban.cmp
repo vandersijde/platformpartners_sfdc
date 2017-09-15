@@ -1,0 +1,16 @@
+<aura:component controller="LigntningController">
+    <aura:attribute name="isValid" type="Boolean"/>
+    <aura:attribute name="iban" type="String"/>
+	<ltng:require styles="/resource/bootstrap_css"/>
+
+	<div class="bootstrap-sf1">
+        <div class="container">
+            <ui:inputText aura:id="ibanInput" label="IBAN"
+                          class="form-control"
+                          value="{!v.iban}"
+                          placeholder="Fill in your IBAN" required="true"/>
+            <ui:button label="Validate" press="{!c.validateIBAN}"/>
+            <ui:outputCheckbox value="{!v.isValid}"/>
+   		</div>
+    </div>
+</aura:component>

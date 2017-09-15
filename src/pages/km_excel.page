@@ -1,0 +1,34 @@
+<apex:page controller="kilometerregistratie" contenttype="application/vnd.ms-excel#kilometerdeclaratie.xls" showHeader="false" sidebar="false" standardStylesheets="false">
+    <h3><b>Kilometer declaratie</b></h3>
+    <table>
+        <tr>
+            <td><b>Bedrijf</b></td>
+            <td>Cloud Apps</td>
+        </tr>
+        <tr>
+            <td><b>Naam</b></td>
+            <td>Richard van der Sijde</td>
+        </tr>
+        <tr>
+            <td><b>Periode</b></td>
+            <td>{!periode}</td>
+        </tr>
+    </table>
+    <br/>
+    <table>
+        <tr style="border-top: 1px solid #000; border-bottom: 1px solid #000">
+            <th>Datum</th>
+            <th>Van</th>
+            <th>Naar</th>
+            <th>Km</th>
+        </tr>
+        <apex:repeat value="{!kmrecordList}" var="rec">
+        <tr style="{!IF(rec.naar=='Totaal kms','border-top: 1px solid #000',IF(rec.naar=='Totaal bedrag','border-bottom: 1px solid #000',''))}">
+            <td style="width:10%">{!rec.datum}</td>
+            <td style="width:40%">{!rec.van}</td>
+            <td style="width:40%{!IF(ISNULL(rec.datum),'font-weight:bold','')}">{!rec.naar}</td>
+            <td style="width:10%;text-align:right;{!IF(ISNULL(rec.datum),'font-weight:bold','')}">{!rec.km}</td>
+        </tr>
+        </apex:repeat>
+    </table>
+</apex:page>

@@ -1,0 +1,25 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="name" type="String" default="Richard van der Sijde"/>
+    <lightning:card >
+        <aura:set attribute="title">
+            {!v.name}
+		    <lightning:badge label="Expert" class="error"/>
+        </aura:set>
+        <div>
+            <lightning:layout >
+                <lightning:layoutItem padding="around-small">
+                    <div>Test</div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <div class="active">One</div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <div>Two</div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <div>Three</div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </lightning:card>
+</aura:component>

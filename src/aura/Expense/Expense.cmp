@@ -1,0 +1,26 @@
+<aura:component >
+	<ltng:require styles="/resource/bootstrap_css"/>
+  <aura:attribute name="expenses" type="Expense__c[]"/>
+  <aura:attribute name="newExpense" type="Expense__c"
+             default="{ 'sobjectType': 'Expense__c',
+                         'Name': '',
+                         'Amount__c': 0,
+                         'Client__c': '',
+                         'Date__c': '',
+                         'Reimbursed__c': false
+                       }"/>
+  <!-- If you registered a namespace, replace line 3-11 with the following -->
+  <!-- <aura:attribute name="expenses" type="myNamespace.Expense__c[]"/>
+  <aura:attribute name="newExpense" type="myNamespace__Expense__c"
+               default="{ 'sobjectType': 'myNamespace__Expense__c',
+                          'Name': '',
+                          'myNamespace__Amount__c': 0,
+                          'myNamespace__Client__c': '',
+                          'myNamespace__Date__c': '',
+                          'myNamespace__Reimbursed__c': false
+                         }"/> -->
+  <!-- Attributes for Expense Counters -->
+  <aura:attribute name="total" type="Double" default="0.00" />
+  <aura:attribute name="exp" type="Double" default="0" />
+	
+</aura:component>

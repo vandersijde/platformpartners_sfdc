@@ -1,0 +1,12 @@
+<apex:page >
+    <apex:includeScript value="{!$Resource.webodf}"/>
+  <script type="text/javascript" charset="utf-8">
+function init() {
+  var odfelement = document.getElementById("odf"),
+      odfcanvas = new odf.OdfCanvas(odfelement);
+    /*odfcanvas.load("myfile.odt");*/
+}
+window.setTimeout(init, 0);
+  </script>
+  <div id="odf"></div>
+</apex:page>

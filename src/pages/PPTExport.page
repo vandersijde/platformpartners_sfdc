@@ -1,0 +1,6 @@
+<apex:page contentType="application/vnd.ms-powerpoint">
+    Hello, world
+    <p>
+        Hoe maak ik now deze ppt op??
+    </p>    
+</apex:page>

@@ -1,0 +1,144 @@
+<apex:page StandardController="Project__c" extensions="GenerateVoucherOverviewExt" renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+<html>
+<head>
+    <style type="text/css">
+        @page {
+            size: 8.5in 10in;/* width height */
+            font-family: Arial Sans Unicode;
+            
+            @top-center {
+                content: element(header);
+            }
+
+            @bottom-center {
+                content: element(footer);
+            }
+        }
+
+        div.header {
+            font-family: Arial Sans Unicode;
+            padding: 10px;
+            position: running(header);
+        }
+
+        div.footer {
+            font-family: Arial Sans Unicode;
+            padding: 5px;
+            display: block;
+            position: running(footer);
+        }
+    </style>
+</head>
+<body>
+    <div class="header" style="margin-top:50px;font-family: Arial, Helvetica, Sans-serif;font-size:10px;color:#AAA">
+        <div style="margin-left:10px">
+	        <apex:image value="{!$Resource.CompanyLogo2017}" height="50%" width="50%"/>
+            <!--<div>
+                <apex:outputText value="Buitendams 11 | 3371 BA Hardinxveld-Giessendam" escape="false"/>
+            </div>-->
+        </div>
+    </div>
+    
+    <div class="footer" style="page-break-after:always;text-align:center;font-family: Arial, Helvetica, Sans-serif;font-size:10px;color:#AAA">
+        <!--<apex:outputText value="{!$Label.STANDARD_INVOICE_FOOTER}" escape="false" rendered="{!Invoice__c.Order__r.Invoice_Footer__c==null}"/>
+        <apex:outputText value="{!Invoice__c.Order__r.Invoice_Footer__c}" escape="false" rendered="{!Invoice__c.Order__r.Invoice_Footer__c!=null}"/>-->
+    </div>
+
+    <div style="position:absolute; margin-left:500px; margin-top:150px;font-family: Arial, Helvetica, Sans-serif;font-size:10px">
+        <table>
+            <tr><td>{!Project__c.Account__r.Name}</td></tr>
+            <!--<apex:outputText value="<tr><td>{!Project__c.Account__r.Invoice_attention_of__c}</td></tr>" escape="false" rendered="{!Project__c.Account__r.Invoice_attention_of__c!=null}"/>-->
+            <tr><td>{!Project__c.Account__r.BillingStreet}</td></tr>
+            <tr><td>{!Project__c.Account__r.BillingPostalCode}&nbsp;{!Project__c.Account__r.BillingCity}</td></tr>
+        </table>        
+    </div>
+
+    <div style="position:absolute; margin-left:20px; margin-top:250px;font-family: Arial, Helvetica, Sans-serif;font-size:10px">
+        <div style="font-weight:bold;font-size:14pt">STRIPPENKAART OVERZICHT</div>
+        <div style="margin-top:25px">
+            <table>
+                <tr>
+                    <td style="width:150px"><b>Referentie:</b></td>
+                    <td>{!Project__c.PO_Number__c}</td>
+                </tr>
+                <tr>
+                    <td><b>Datum:</b></td>
+                    <td>
+                        <apex:outputText value="{0, date, dd-MM-yyyy}">
+                            <apex:param value="{!TODAY()}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px"><b>Totaal budget:</b></td>
+                    <td>
+                        <apex:outputText value="{0,number,#.##}">
+	                        <apex:param name="param1" value="{!Project__c.Total_Budget__c}"/>
+                        </apex:outputText>&nbsp;uur
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div style="position:absolute; width:90%;margin-left:20px; margin-top:400px; font-family: Arial, Helvetica, Sans-serif;font-size:10px">
+        <table style="width:100%" cellpadding="0" cellspacing="0">
+            <th style="width:66%;height:30px;border-bottom:0.5px solid #000">Omschrijving</th>
+            <th style="width:4%;text-align:center;border-bottom:0.5px solid #000"></th>
+            <th colspan="2" style="text-align:right;width:15%;border-bottom:0.5px solid #000"></th>
+            <th colspan="2" style="text-align:right;width:15%;border-bottom:0.5px solid #000">Aantal uur</th>
+            
+            <apex:repeat value="{!relatedTimeReportList}" var="il">
+                <tr>
+                    <td style="height:30px">
+                        <apex:outputText value="{0,DATE,dd-MM-yyyy}">
+                            <apex:param name="param0" value="{!il.Date__c}"/>
+                        </apex:outputText>&nbsp;-&nbsp;    
+                        <apex:outputText value="{!il.Description__c}"/>
+                    </td>
+                    <td style="text-align:center"></td>
+                    <td style="width:30px;text-align:right"></td>
+                    <td style="text-align:right;"></td>
+                    <td style="width:30px;text-align:right"></td>
+                    <td style="text-align:right;">
+                    	<apex:outputText value="{0,number,#.00}">
+	                        <apex:param name="param2" value="{!il.Total_time__c}"/>
+                        </apex:outputText>	
+                    </td>
+                </tr>
+            </apex:repeat>
+            
+                <tr>
+                    <td style="height:30px"></td>
+                    <td style="border-top:0.5px solid #000" colspan="3">Totaal besteed</td>    
+                    <td style="border-top:0.5px solid #000;width:30px;text-align:right">
+                    	(<apex:outputText value="{0,number,#}">
+	                        <apex:param name="param1" value="{!Project__c.Percentage_Spent__c}"/>
+                        </apex:outputText>%)
+                    </td>
+                    <td style="border-top:0.5px solid #000;text-align:right;">
+                    	<apex:outputText value="{0,number,#.00}">
+	                        <apex:param name="param1" value="{!Project__c.Total_time__c}"/>
+                        </apex:outputText>	
+                    </td>    
+                </tr>
+                <tr>
+                    <td style="height:30px"></td>
+                    <td style="border-top:0.5px solid #000;border-bottom:1px double #000" colspan="3">Totaal tegoed</td>    
+                    <td style="border-top:0.5px solid #000;border-bottom:1px double #000;width:30px;text-align:right">
+                    	(<apex:outputText value="{0,number,#}">
+	                        <apex:param name="param1" value="{!Project__c.Percentage_to_Spent__c}"/>
+                        </apex:outputText>%)
+                    </td>
+                    <td style="border-top:0.5px solid #000;border-bottom:1px double #000;text-align:right;">
+                    	<apex:outputText value="{0,number,#.00}">
+	                        <apex:param name="param1" value="{!Project__c.Total_Time_Left__c}"/>
+                        </apex:outputText>	
+                    </td>    
+                </tr>
+
+        </table>
+    </div>
+</body> 
+</html>
+</apex:page>

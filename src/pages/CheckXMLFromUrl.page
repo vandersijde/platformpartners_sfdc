@@ -1,0 +1,9 @@
+<apex:page controller="CheckXMLFromUrlController">
+    <apex:form >
+        <apex:inputText value="{!url}"/>
+        <apex:commandButton value="Send" action="{!SendRequest}" rerender="outputxml"/>
+    </apex:form>
+	<apex:outputPanel id="outputxml">
+        <apex:outputText value="{!response}"/>
+    </apex:outputPanel>
+</apex:page>
